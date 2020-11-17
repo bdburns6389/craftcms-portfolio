@@ -1,0 +1,12 @@
+{% extends "_layouts/layout.twig" %}
+
+{% set posts = craft
+    .entries
+    .section("blogPosts")
+    .all() %}
+
+{% block content %}
+
+	{% include "_includes/listing" with { posts: posts } %}
+
+{% endblock %}

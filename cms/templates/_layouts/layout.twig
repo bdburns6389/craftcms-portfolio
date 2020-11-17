@@ -1,0 +1,51 @@
+{#
+
+ # The site layout template
+ # ------------------------
+ #
+ # This layout template extends the _layouts/base.html layout, and defines the
+ # main site layout: the header, footer, and main content area.
+ #
+ # It’s never accessed directly. Instead it is extended by all of our main site
+ # templates.
+-#}
+
+{% extends "_layouts/base" %}
+
+{# Set the namespace we'll use for Highway views to match our namespace in the nav. If it's not defined, use 'common' #}
+{% set namespace = 'common' %}
+
+{% set title = entry.title ?? category.title ?? "" %}
+
+{% block body %}
+
+	{% include "_partials/global/page_revealer.twig" %}
+
+	<main data-router-wrapper>
+		<div data-router-view="{{ namespace }}">
+			<div
+				class="page-wrapper">
+				{# -- Header -- #}
+				{% include "_partials/global/header.twig" %}
+
+				<div style="background-image: url('{{baseUrl}}assets/blog/Firefox_wallpaper.png'); height: 100vh; background-size: center; background-position: center; display: flex; justify-content: center; align-items: center;">
+					<p style="max-width: 15ch; text-align: center; color: white; font-family: sans-serif; font-weight: 600; font-size: 6rem; margin-top: 120px;">
+						{{ title }}
+					</p>
+				</div>
+				<div
+					id="page-content-container">
+					{# -- Primary content block -- #}
+					{% block content %}{% endblock %}
+
+					{# -- Content that appears below the primary content block -- #}
+					{% block subcontent %}{% endblock %}
+				</div>
+
+				{# -- Footer -- #}
+				{% include "_partials/global/footer.twig" %}
+			</div>
+		</div>
+	</main>
+
+{% endblock %}

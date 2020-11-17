@@ -1,0 +1,36 @@
+{% extends "_layouts/layout.twig" %}
+
+{% set globalSiteInformation = craft
+    .app
+    .globals
+    .getSetByHandle("siteInformation") %}
+
+{% set postContent = entry.postContent.all() %}
+
+{% block content %}
+	<div class="post-container" style="margin-left: auto; margin-right: auto; margin-bottom: 2rem; width: 80vw;">
+		<h1 style="text-align: center; margin: 2rem;">{{ entry.title }}</h1>
+		<h2 style="text-align: center; margin: 2rem;">{{ entry.summary }}</h2>
+
+		{% include "_includes/slideshow.twig" with { postContent: postContent} only %}
+		<br>
+
+		{% for block in postContent %}
+			{% if block.type == "text" %}
+				<div style="width: 80%; margin-left: auto; margin-right: auto;">
+					{{ block.text }}
+				</div>
+			{% endif %}
+		{% endfor %}
+
+		{# Display post categories #}
+		{% if entry.postCategories | length %}
+			<div style="text-align: right;">
+				{% for category in entry.postCategories.all() %}
+					<a style="background: lightblue; padding: .4rem; border-radius: 12px;" href="{{ category.url }}">
+						{{- category.title -}}</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- Slideshow container -->
+<div class="slideshow-container" data-router-disabled style="width: 640px; background-color: rgba(171, 183, 183, .7);">
+	{% for block in postContent %}
+		{% if block.type == "image" %}
+			{% for image in block.image.all() %}
+				<div class="mySlides fade">
+					<img src="{{image.url}}" alt="{{image.title}}" style="height: 360px; width: 100%; object-fit: contain">
+					<div class="text">{{ image.title }}</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+
+	<!-- Next and previous buttons -->
+	<a class="prev" data-router-disabled onclick="plusSlides(-1)">&#10094;</a>
+	<a class="next" data-router-disabled onclick="plusSlides(1)">&#10095;</a>
+</div>

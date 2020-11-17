@@ -1,0 +1,12 @@
+{% extends "_layouts/layout.twig" %}
+
+{% set posts = craft
+    .entries
+    .section("portfolio")
+    .all() %}
+
+{% block content %}
+
+    <h2>BLOG INDEX</h2>
+
+{% endblock %}

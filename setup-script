@@ -1,0 +1,274 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @author    nystudio107
+ * @copyright Copyright (c) 2017 nystudio107
+ * @link      https://nystudio107.com/
+ * @package   nystudio107/craft
+ * @since     1.0.0
+ * @license   MIT
+ */
+
+use yii\helpers\Console;
+
+use mikehaertl\shellcommand\Command as ShellCommand;
+
+const INSTALL_PLUGINS = [
+    'async-queue',
+    'calendarize', // https://github.com/unionco/calendarize
+    'child-me', // https://github.com/mmikkel/ChildMe-Craft
+    'contact-form', // https://github.com/craftcms/contact-form
+    'cp-field-inspect', // https://github.com/mmikkel/CpFieldInspect-Craft
+    'related-entry-types', // https://github.com/unionco/craft-related-entry-types
+    'field-manager', // https://github.com/verbb/field-manager
+    //'freeform', // https://github.com/solspace/craft3-freeform
+    'imager', // https://github.com/aelvan/Imager-Craft
+    'logs', // https://github.com/ethercreative/logs
+    'typedlinkfield', // https://github.com/sebastian-lenz/craft-linkfield
+    'mailgun', // https://github.com/craftcms/mailgun
+    'minify',
+    'neo', // https://github.com/spicywebau/craft-neo
+    'redactor', // https://github.com/craftcms/redactor
+    'routemap',
+    //'scout', // https://github.com/riasvdv/craft-scout
+    'seo', // https://github.com/ethercreative/seo
+    //'sprout-fields', // https://plugins.craftcms.com/sprout-fields
+    'typogrify'
+];
+
+// Set path constants
+define('CRAFT_BASE_PATH', __DIR__.'/cms');
+define('CRAFT_VENDOR_PATH', CRAFT_BASE_PATH.'/vendor');
+
+// Load Composer's autoloader
+require_once CRAFT_VENDOR_PATH.'/autoload.php';
+
+// Load the .env file Craft created
+if (class_exists('Dotenv\Dotenv') && file_exists(CRAFT_BASE_PATH.'/.env')) {
+    Dotenv\Dotenv::create(CRAFT_BASE_PATH)->load();
+}
+
+// By default, run the setup script
+if (empty($argv[1])) {
+    setupCraft();
+} else {
+    // See what command we were passed in
+    switch ($argv[1]) {
+        case 'welcome':
+            // Display a welcome message
+            welcomeCraft();
+            break;
+        
+        case 'setup':
+            // setup file permissions and display welcome message
+            setupPermissions();
+            welcomeCraft();
+            break;
+
+        default:
+            // Display a welcome message. Yarn install should be manual, plugins are installed by Craft's Project Config
+            welcomeCraft();
+            break;
+    }
+}
+
+/**
+ * Display a welcome message
+ */
+function welcomeCraft()
+{
+    outputString(PHP_EOL.'To set up your Craft install, FROM THE ROOT PROJECT DIRECTORY, run:', Console::FG_YELLOW);
+    $script = './cms/craft install';
+    outputString(PHP_EOL.'    '.$script, Console::FG_GREEN);
+
+    outputString(PHP_EOL.'To set up your environment for theme development, run:', Console::FG_YELLOW);
+    $script = 'yarn install';
+    outputString(PHP_EOL.'    '.$script.PHP_EOL, Console::FG_GREEN);
+}
+
+/**
+ * Set up file permissions
+ */
+function setupPermissions()
+{
+    // Say hello
+    outputString(PHP_EOL.'Setting file permissions', Console::FG_YELLOW);
+    // Set file permissions
+    executeShellCommand('chmod +x ../setup-script');
+    executeShellCommand('chmod +x ../deployment-script.sh');
+    executeShellCommand('chmod +x ../laradock/sync.sh');
+    executeShellCommand('find ../shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;');
+    executeShellCommand('chmod +x ./craft');
+
+    // Say goodbye
+    outputString('File permissions set successfully!', Console::FG_YELLOW);
+}
+
+/**
+ * Set up all the things!
+ */
+function setupCraft()
+{
+    // Say hello
+    outputString(PHP_EOL.'Setting up Craft environment', Console::FG_YELLOW);
+    // Install the default plugins
+    installPlugins();
+    // Say goodbye
+    outputString(PHP_EOL.'Setup complete. Have a nice day!', Console::FG_YELLOW);
+}
+
+/**
+ * Set up all the things!
+ */
+function setupCraftDevelopment()
+{
+    // Say hello
+    outputString(PHP_EOL.'Setting up development packages', Console::FG_YELLOW);
+    // Install the NodeJS packages
+    installNodePackages();
+    // Say goodbye
+    outputString(PHP_EOL.'Setup complete. Have a nice day!', Console::FG_YELLOW);
+}
+
+/**
+ * Install the default plugins
+ */
+function installPlugins()
+{
+    outputString(PHP_EOL.'Installing plugins', Console::FG_YELLOW);
+    $installPluginCmd = './cms/craft install/plugin ';
+    foreach (INSTALL_PLUGINS as $pluginHandle) {
+        outputString('- installing plugin '.$pluginHandle);
+        executeShellCommand($installPluginCmd . $pluginHandle);
+    }
+}
+
+function installNodePackages()
+{
+    $command = '';
+    if (shellCommandExists('npm')) {
+        $command = 'npm install';
+    }
+    if (shellCommandExists('yarn')) {
+        $command = 'yarn';
+    }
+
+    outputString(PHP_EOL.'Installing NodeJS packages via '.$command. ' (this may take a while)', Console::FG_YELLOW);
+
+    if (!empty($command)) {
+        $result = executeShellCommand($command);
+        outputString($result);
+    } else {
+        outputString('### unable to install NodeJS packages, yarn/npm not found', Console::FG_RED);
+    }
+}
+
+/**
+ * Output a string to the console, using optional $args to color it, if supported
+ *
+ * @param string $string
+ *
+ * @return mixed
+ */
+function outputString($string)
+{
+    $stream = \STDOUT;
+    if (Console::streamSupportsAnsiColors($stream)) {
+        $args = func_get_args();
+        array_shift($args);
+        $string = Console::ansiFormat($string, $args);
+    }
+
+    return Console::stdout($string.PHP_EOL);
+}
+
+/**
+ * Copy the $srcPath file to $destPath
+ *
+ * @param string $srcPath
+ * @param string $destPath
+ *
+ * @return bool
+ */
+function copyFile(string $srcPath, string $destPath)
+{
+    $result = @copy($srcPath, $destPath);
+    if ($result) {
+        outputString('- copied '.$srcPath.' to '.$destPath);
+    } else {
+        outputString('### error copying '.$srcPath.' to '.$destPath, Console::FG_RED);
+    }
+
+    return $result;
+}
+
+/**
+ * Replace strings in $filePath and write out the modified file
+ *
+ * @param string $filePath
+ * @param array  $replacements
+ */
+function replaceInFile(string $filePath, array $replacements)
+{
+    if (!empty($replacements)) {
+        outputString('- setting up '.$filePath);
+        $fileContents = file_get_contents($filePath);
+        foreach ($replacements as $findValue => $params) {
+            $replaceValue = empty($params['env']) ? $params['default'] : getenv($params['env']) ?? $params['default'];
+            if (!empty($params['substr'])) {
+                $subStr = $params['substr'];
+                $wrapChar = '';
+                // If the $subStr is quoted, quote the $replaceValue, too
+                if ($subStr[0] == "'" || $subStr[0] == '"') {
+                    $wrapChar = $subStr[0];
+                }
+                $replaceValue = str_replace($subStr, $wrapChar.$replaceValue.$wrapChar, $findValue);
+            }
+            $fileContents = str_replace($findValue, $replaceValue, $fileContents);
+        }
+        // Write the file out
+        file_put_contents($filePath, $fileContents);
+    }
+}
+
+/**
+ * Execute a shell command
+ *
+ * @param string $command
+ *
+ * @return string
+ */
+function executeShellCommand(string $command): string
+{
+    // Create the shell command
+    $shellCommand = new ShellCommand();
+    $shellCommand->setCommand($command);
+
+    // If we don't have proc_open, maybe we've got exec
+    if (!function_exists('proc_open') && function_exists('exec')) {
+        $shellCommand->useExec = true;
+    }
+
+    // Return the result of the command's output or error
+    if ($shellCommand->execute()) {
+        $result = $shellCommand->getOutput();
+    } else {
+        $result = $shellCommand->getError();
+    }
+
+    return $result;
+}
+
+/**
+ * Return whether a shell command exists ir not
+ *
+ * @param string $command
+ *
+ * @return bool
+ */
+function shellCommandExists(string $command): bool
+{
+    $result = executeShellCommand('which '.$command);
+
+    return !empty($result);
+}

@@ -1,0 +1,182 @@
+/********************************************************************************************************
+* Variables - used to create variables for the site SCSS and to override default configuration values
+* created by Foundation. 
+********************************************************************************************************/
+
+/******************** Color and font variables ********************/
+$primary-accent: rebeccapurple;
+$dark-heading-copy-color: #ffffff;
+
+$body-copy-font: "Open Sans", sans-serif;
+$body-text-color: #16191a;
+$body-copy-color: $body-text-color;
+$subheading-copy-font: "Open Sans", sans-serif;
+$heading-copy-font: "Encode Sans Condensed", sans-serif;
+$heading-text-color: #16191a;
+$heading-copy-color: $heading-text-color;
+$dark-heading-copy-color: #ffffff;
+$base-font-size: 20px;
+$global-font-size: 20px;
+
+@import "~foundation-sites/scss/util/util";
+
+/******************** Layout Variables ********************/
+
+// Map containing max-widths for container classes. Used mostly in _common.scss, where we set up the standard containers.
+// Usage: get($container-widths, "containerSize.breakpoint")
+$container-widths: (
+  standard: (
+    small: rem-calc(1150px),
+    medium: rem-calc(1150px),
+    large: rem-calc(1150px),
+    xlarge: rem-calc(1150px),
+    xxlarge: rem-calc(1150px),
+  ),
+  large: (
+    small: rem-calc(1700px),
+    medium: rem-calc(1700px),
+    large: rem-calc(1700px),
+    xlarge: rem-calc(1700px),
+    xxlarge: rem-calc(1700px),
+  ),
+);
+
+// Map containing gutters (left and right padding values) for container classes. Used mostly in _common.scss, where we set up the standard containers.
+$container-gutters: (
+  standard: (
+    small: rem-calc(20px),
+    medium: rem-calc(25px),
+    large: rem-calc(25px),
+    xlarge: rem-calc(25px),
+    xxlarge: rem-calc(25px),
+  ),
+  large: (
+    small: rem-calc(20px),
+    medium: rem-calc(25px),
+    large: rem-calc(25px),
+    xlarge: rem-calc(25px),
+    xxlarge: rem-calc(25px),
+  ),
+);
+
+// Usage: get($section-spacings, "sectionSize.breakpoint")
+$section-spacings: (
+  small: (
+    small: 2rem,
+    medium: 4rem,
+    large: 4rem,
+  ),
+  medium: (
+    small: 3.5rem,
+    medium: 7rem,
+    large: 7rem,
+  ),
+  large: (
+    small: 5rem,
+    medium: 8rem,
+    large: 10rem,
+  ),
+);
+
+/******************** Foundation Overrides ********************/
+// Global settings
+$flex: true;
+$prototype: false;
+$global-width: rem-calc(1150);
+
+// Base Typography
+$small-font-size: 16px;
+$global-lineheight: 1.6;
+$global-weight-normal: normal;
+$global-weight-bold: bold;
+$body-font-color: #16191a;
+$body-font-family: $body-copy-font, Roboto, Arial, sans-serif;
+
+// Paragraph Typography
+$paragraph-lineheight: 1.6;
+$paragraph-margin-bottom: 1.6em;
+
+// Heading Typography
+$header-font-weight: 700;
+$header-font-style: normal;
+$header-color: #16191a;
+$header-small-font-color: $header-color;
+$header-font-family: $heading-copy-font, Roboto, Arial, sans-serif;
+$header-lineheight: 1.2;
+$header-margin-bottom: 1.5em;
+$header-styles: (
+  small: (
+    "h1": (
+      "font-size": 24,
+    ),
+    "h2": (
+      "font-size": 20,
+    ),
+    "h3": (
+      "font-size": 19,
+    ),
+    "h4": (
+      "font-size": 18,
+    ),
+    "h5": (
+      "font-size": 17,
+    ),
+    "h6": (
+      "font-size": 16,
+    ),
+  ),
+  medium: (
+    "h1": (
+      "font-size": 48,
+    ),
+    "h2": (
+      "font-size": 40,
+    ),
+    "h3": (
+      "font-size": 31,
+    ),
+    "h4": (
+      "font-size": 25,
+    ),
+    "h5": (
+      "font-size": 20,
+    ),
+    "h6": (
+      "font-size": 16,
+    ),
+  ),
+);
+
+// Misc Typography
+$anchor-color: $primary-accent;
+$anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
+$anchor-text-decoration: none;
+$anchor-text-decoration-hover: none;
+$list-lineheight: $paragraph-lineheight;
+$list-margin-bottom: $paragraph-margin-bottom;
+$list-style-type: disc;
+$list-style-position: outside;
+$list-side-margin: 1.25rem;
+$list-nested-side-margin: 1.25rem;
+
+// Breakpoints
+$breakpoints: (
+  small: 0,
+  medium: 640px,
+  large: 1024px,
+  xlarge: 1200px,
+  xxlarge: 1440px,
+);
+$breakpoint-classes: (small medium large xlarge xxlarge);
+
+// XY Grid
+$xy-grid: true;
+$grid-container: $global-width;
+$grid-columns: 12;
+$grid-margin-gutters: (
+  small: 20px,
+  medium: 50px,
+);
+$xy-block-grid-max: 8;
+
+/******************** Misc ********************/

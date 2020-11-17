@@ -1,0 +1,104 @@
+{#
+ # The base layout template
+ # ------------------------
+ #
+ # This template defines the base HTML structure for our site.
+ #
+ # This is the only place in our templates where we'll ever need to define that
+ # stuff. All other templates will extend this one.
+ #
+ # This template is never accessed directly; instead it is extended by child templates.
+ #}
+
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{%- minify -%}
+{% set baseUrl = alias('@web') ~ '/' %}
+{% set craftEnvironment = getenv('ENVIRONMENT') %}
+{% header "Link: <#{baseUrl}>; rel=dns-prefetch;,<#{baseUrl}>; rel=preconnect; crossorigin;" %}
+<!DOCTYPE html>
+{%- endminify -%}
+<html lang="{{ craft.app.language |slice(0,2) }}" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+    {%- minify -%}
+    <head>
+        <link rel="dns-prefetch" href="{{ baseUrl }}">
+        <link rel="preconnect" href="{{ baseUrl }}" crossorigin="crossorigin">
+        {# <meta name="google-site-verification" conte{% set baseUrl = alias('@web') ~ '/' %}nt="pSIFysvZOVXyWxcXGDBDo1pMuF0UtC-ILBThaI7G7gE" /> #}
+
+        {# set up caching requirements for pages that include cache tags #}
+        {# usage: {% cache globally using key craft.app.request.pathInfo unless cacheExempt %} #}
+        {% set cacheExempt = false %}
+        {% set cacheExemptSegments = [
+            'dont-cache-me'
+        ] %}
+        {% if craft.app.request.getSegment(1) in cacheExemptSegments %}
+            {% set cacheExempt = true %}
+        {% endif %}
+        {% if craftEnvironment != 'staging' or craftEnvironment != 'live' %}
+            {% set cacheExempt = true %}
+        {% endif %}
+
+
+        {# -- Any <link> tags that should be included in the header #}
+        {% block _head_links %}{% endblock %}
+
+        {# <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title> #}
+        {% hook "seo" %}
+
+        {% include "_partials/global/html_header.twig" %}
+
+        {%- endminify -%}
+        <link rel="stylesheet" href="{{ baseUrl }}dist/main.css"></link>
+        {# -- Inline CSS block used by templates for Critical CSS #}
+        {% block _inline_css %}{% endblock %}
+
+        <noscript><style>.revealer.show { display: none; }</style></noscript> <!-- hide the preloader when scripts are disabled -->
+
+        {%- minify -%}
+        {% if craftEnvironment != 'staging' and craftEnvironment != 'local' %}
+           {% include "_partials/global/google-analytics.twig" %}
+        {% endif %}
+        
+        <script type="text/javascript">
+            var baseUrl = "{{ baseUrl }}";
+            var assetsBaseUrl = "{{ baseUrl }}";
+            var retina = window.devicePixelRatio > 1;
+            var csrfTokenName = "{{ craft.app.config.general.csrfTokenName | e('js') }}";
+            var csrfTokenValue = "{{ craft.app.request.csrfToken | e('js') }}";
+            var calendarTimeFormat = "{{ craft.app.locale.getTimeFormat('short', 'php') }}";
+            var calendarDefaultDate = "{{ now.format("Y-m-d") }}";
+        </script>
+
+        {# -- </head> JS -- #}
+        {% block _head_js %}{% endblock %}
+
+    </head>
+
+    {# -- HTML Body -- #}
+    <body {% if bodyClass is defined %}class="{{ bodyClass }}"{% endif %}>
+        {% block body %}
+        {% endblock %}
+
+        {# BrowserSync hook if devmode is enabled #}
+        {% if craftEnvironment == 'local' %}
+            <script id="__bs_script__">//<![CDATA[
+                document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.3'><\/script>".replace("HOST", location.hostname));
+            //]]></script>
+        {% endif %}
+
+        {# -- Footer JS --#}
+        {% block _footer_js %}
+        {% endblock %}
+
+        {# -- Inline JS -- #}
+        {% block _inline_js %}
+        {% endblock %}
+        {%- endminify -%}
+
+        <script src="{{ baseUrl }}dist/vendors~main.bundle.js" type="text/javascript" defer></script>
+        <script src="{{ baseUrl }}dist/main.bundle.js" type="text/javascript" defer></script>
+        <script src="{{ baseUrl }}dist/slideshow.js" type="text/javascript" defer></script>
+
+        {# -- Global HTML Footer -- #}
+        {% include "_partials/global/html_footer.twig" %}
+    </body>
+</html>

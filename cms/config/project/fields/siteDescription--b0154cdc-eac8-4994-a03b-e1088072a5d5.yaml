@@ -1,0 +1,18 @@
+contentColumnType: text
+fieldGroup: 26cc3a45-d485-4ce7-abc7-777d2e23db2e
+handle: siteDescription
+instructions: ''
+name: 'Site Description'
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: ''
+  columnType: null
+  initialRows: '1'
+  multiline: '1'
+  placeholder: ''
+  uiMode: normal
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

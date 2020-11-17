@@ -1,0 +1,32 @@
+{# Image Block #}
+{% set block_type = "image" %}
+
+{# Macro Imports #}
+{% import '_macros/lazyImager' as LazyImager %}
+
+{# Block variable defaults #}
+{% set image = block['image'] is defined ? block.image[0] : null %}
+
+{% if image %}
+	{% set imageOptions = {
+        sizes: [
+            { width: 2200 },
+            { width: 1920 },
+            { width: 1366 },
+            { width: 768 },
+            { width: 360 },
+        ],
+        alt: image.title,
+        ratio: '16:10',
+        cover: true,
+        wrapImage: true,
+    } %}
+{% endif %}
+
+{% if image %}
+<section class="section section--medium section--whitespace section-{{ block_type}}--block animatable">
+    <div class="container container--large">
+        {{ LazyImager.LazyImager(image, imageOptions) }}
+    </div>
+</section>
+{% endif %}

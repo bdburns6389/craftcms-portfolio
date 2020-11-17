@@ -1,0 +1,25 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{% extends "_layouts/layout.twig" %}
+
+{% block _inline_css %}
+{% endblock %}
+
+{% block content %}
+
+    <section class="section section--medium animatable missing-page-error-section">
+        <div class="container">
+            <div class="missing-page-error text-center">
+                <h2>Sorry, you might be lost (404).</h2>
+                <p>
+                    <strong>We couldn't find the page you're looking for.</strong>
+                    <br>
+                    Unless you really love this page,
+                    <a href="{{ siteUrl }}">feel free to visit our home page instead.</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block _inline_js %}{% endblock %}
