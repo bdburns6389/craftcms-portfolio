@@ -1,14 +1,14 @@
-<div class="grid-container">
-	<div class="grid">
+<div class="blog-grid-container">
+	<div class="blog-grid">
 		{% for post in posts %}
-			<div class="card">
+			<div class="blog-grid-card">
 				{% if post.featureImage|length %}
 					{% for image in post.featureImage.all() %}
 						<img src="{{image.url}}" alt="{{image.title}}">
 					{% endfor %}
 				{% endif %}
 				<h3>{{post.title}}</h3>
-				<div class="card-content">{{post.summary}}</div>
+				<div class="blog-grid-card-content">{{post.summary}}</div>
 				<a alt="{{post.title}}" href="{{post.url}}" class="btn">See More</a>
 				<div class="card-post-meta">
 					<p class="card-author">Brian Burns</p>

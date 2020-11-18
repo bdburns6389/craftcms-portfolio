@@ -1,16 +1,12 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 {% extends "_layouts/layout.twig" %}
 
-{% block _inline_css %}
-{% endblock %}
+{% block _inline_css %}{% endblock %}
 
 {% block content %}
-<section>
-ABOUT ME IN TWIG!!
-</section>
-{% include '_partials/components/content_builder' %}
+
+	{% include '_partials/components/content_builder' %}
 
 {% endblock %}
 
-{% block _inline_js %}
-{% endblock %}
+{% block _inline_js %}{% endblock %}

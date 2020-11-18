@@ -317,15 +317,21 @@ function _classCallCheck(instance,Constructor){if(!(instance instanceof Construc
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var lazysizes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lazysizes */ "./node_modules/lazysizes/lazysizes.js");
-/* harmony import */ var lazysizes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lazysizes__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var lazysizes_plugins_respimg_ls_respimg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lazysizes/plugins/respimg/ls.respimg */ "./node_modules/lazysizes/plugins/respimg/ls.respimg.js");
-/* harmony import */ var lazysizes_plugins_respimg_ls_respimg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lazysizes_plugins_respimg_ls_respimg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _dogstudio_highway__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @dogstudio/highway */ "./node_modules/@dogstudio/highway/build/highway.module.js");
-/* harmony import */ var _DefaultRenderer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DefaultRenderer */ "./src/js/DefaultRenderer.js");
-/* harmony import */ var _DefaultTransition__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DefaultTransition */ "./src/js/DefaultTransition.js");
-/* harmony import */ var _MainController__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MainController */ "./src/js/MainController.js");
-$(function(){var H=new _dogstudio_highway__WEBPACK_IMPORTED_MODULE_2__["default"].Core({renderers:{common:_DefaultRenderer__WEBPACK_IMPORTED_MODULE_3__["default"]},transitions:{common:_DefaultTransition__WEBPACK_IMPORTED_MODULE_4__["default"],default:_DefaultTransition__WEBPACK_IMPORTED_MODULE_4__["default"]}});});
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.regexp.exec */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lazysizes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lazysizes */ "./node_modules/lazysizes/lazysizes.js");
+/* harmony import */ var lazysizes__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lazysizes__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lazysizes_plugins_respimg_ls_respimg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lazysizes/plugins/respimg/ls.respimg */ "./node_modules/lazysizes/plugins/respimg/ls.respimg.js");
+/* harmony import */ var lazysizes_plugins_respimg_ls_respimg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lazysizes_plugins_respimg_ls_respimg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _dogstudio_highway__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @dogstudio/highway */ "./node_modules/@dogstudio/highway/build/highway.module.js");
+/* harmony import */ var _DefaultRenderer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DefaultRenderer */ "./src/js/DefaultRenderer.js");
+/* harmony import */ var _DefaultTransition__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./DefaultTransition */ "./src/js/DefaultTransition.js");
+/* harmony import */ var _MainController__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MainController */ "./src/js/MainController.js");
+$(function(){var H=new _dogstudio_highway__WEBPACK_IMPORTED_MODULE_4__["default"].Core({renderers:{common:_DefaultRenderer__WEBPACK_IMPORTED_MODULE_5__["default"]},transitions:{common:_DefaultTransition__WEBPACK_IMPORTED_MODULE_6__["default"],default:_DefaultTransition__WEBPACK_IMPORTED_MODULE_6__["default"]}});});/* ------ Slideshow for images --------- */var slideIndex=1;showSlides(slideIndex);// Next/previous controls
+function plusSlides(n){showSlides(slideIndex+=n);}// Thumbnail image controls
+function currentSlide(n){showSlides(slideIndex=n);}function showSlides(n){var i;var slides=document.getElementsByClassName("mySlides");var dots=document.getElementsByClassName("dot");if(n>slides.length){slideIndex=1;}if(n<1){slideIndex=slides.length;}for(i=0;i<slides.length;i++){slides[i].style.display="none";}for(i=0;i<dots.length;i++){dots[i].className=dots[i].className.replace(" active","");}slides[slideIndex-1].style.display="block";dots[slideIndex-1].className+=" active";}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
