@@ -1078,3 +1078,32 @@ a.btn {
     max-width: 100%;
   }
 }
+
+/* --- Blog Entry ---- */
+.post-container {
+  margin-left: auto;
+  margin-right: auto; 
+  margin-bottom: 2rem;
+  width: 80vw;
+
+  h1, h2 {
+    text-align: center; 
+    margin: 2rem;
+  }
+}
+
+.post-content-text {
+  width: 80%; 
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+.post-categories-list {
+  text-align: right;
+
+  a {
+    background: lightblue; 
+    padding: .4rem; 
+    border-radius: 12px;
+  }
+}
