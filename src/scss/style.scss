@@ -889,6 +889,19 @@ a.logo {
   }
 }
 
+/* --- Layout Styles --- */
+.page-hero{
+  p{
+    max-width: 15ch; 
+    text-align: center; 
+    color: white; 
+    font-family: sans-serif; 
+    font-weight: 600; 
+    font-size: 6rem; 
+    margin-top: 120px;
+  }
+}
+
 /* --- Image Slideshow --- */
 
 /* Slideshow container */
@@ -896,11 +909,19 @@ a.logo {
   max-width: 1000px;
   position: relative;
   margin: auto;
+  width: 640px; 
+  background-color: rgba(171, 183, 183, .7);
 }
 
 /* Hide the images by default */
 .mySlides {
   display: none;
+
+  img {
+    height: 360px; 
+    width: 100%; 
+    object-fit: contain
+  }
 }
 
 /* Next & previous buttons */

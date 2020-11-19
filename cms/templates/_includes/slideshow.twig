@@ -1,10 +1,10 @@
 <!-- Slideshow container -->
-<div class="slideshow-container" data-router-disabled style="width: 640px; background-color: rgba(171, 183, 183, .7);">
+<div class="slideshow-container" data-router-disabled>
 	{% for block in postContent %}
 		{% if block.type == "image" %}
 			{% for image in block.image.all() %}
 				<div class="mySlides fade">
-					<img src="{{image.url}}" alt="{{image.title}}" style="height: 360px; width: 100%; object-fit: contain">
+					<img src="{{image.url}}" alt="{{image.title}}">
 					<div class="text">{{ image.title }}</div>
 				</div>
 			{% endfor %}
