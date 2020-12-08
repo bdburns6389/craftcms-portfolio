@@ -2,11 +2,30 @@
 
 {% set posts = craft
     .entries
-    .section("portfolio")
+    .section("portfolioPosts")
     .all() %}
 
+
 {% block content %}
+	<div style="margin: 1.2rem; display: flex; flex-direction: column; justify-content: center; align-items: center" class="portfolio-container">
+		{% for post in posts %}
+			<div onclick="document.location.href = '{{post.url}}'" style="display: flex; margin-top: 2rem; gap: 2rem; overflow: hidden;" class="portfolio-item">
+				{% if post.featureImage|length %}
+					{% for image in post.featureImage.all() %}
+						<img src="{{image.url}}" alt="{{image.title}}" class="portfolio-featured-image">
+					{% endfor %}
+				{% endif %}
 
-	<h2>portfolio INDEX</h2>
+				<h1 class="portfolio-title">{{post.title}}</h1>
 
+				{% for text in post.postContent.all() %}
+					{% if text.type == "text" %}
+						<div class="portfolio-content">
+							{{ text.text }}
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}

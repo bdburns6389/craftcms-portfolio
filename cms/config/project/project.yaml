@@ -1,4 +1,4 @@
-dateModified: 1605663586
+dateModified: 1605744238
 email:
   fromEmail: hello@boyerwebstudios.com
   fromName: $SITE_NAME
@@ -30,12 +30,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-    settings:
-      allowAttachments: ''
-      prependSender: 'On behalf of'
-      prependSubject: 'New message from SELF'
-      successFlashMessage: 'Your message has been sent.'
-      toEmail: bdburns6389@gmail.com
   cp-field-inspect:
     edition: standard
     enabled: true

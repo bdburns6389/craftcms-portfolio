@@ -3,9 +3,16 @@
 
 {% block _inline_css %}{% endblock %}
 
+{% set content = entry.contentBuilder.all() %}
+
 {% block content %}
 
-	{% include '_partials/components/content_builder' %}
+	{% for part in content %}
+		{{part.heading}}
+		{{part.rtfContent}}
+		<img src="{{part.getUrl()}}"/>
+	{% endfor %}
+
 
 {% endblock %}
 

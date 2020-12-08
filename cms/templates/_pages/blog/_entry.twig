@@ -15,10 +15,10 @@
 		{% include "_includes/slideshow.twig" with { postContent: postContent} only %}
 		<br>
 
-		{% for block in postContent %}
-			{% if block.type == "text" %}
+		{% for test in postContent %}
+			{% if test.type == "text" %}
 				<div class="post-content-text">
-					{{ block.text }}
+					{{ test.text }}
 				</div>
 			{% endif %}
 		{% endfor %}
